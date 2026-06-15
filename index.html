@@ -245,7 +245,6 @@
       Product validation, web development, and configuration for founder-led NZ businesses.
       Fixed-scope, no surprises.
     </div>
-    <!-- Minimal schema for local services -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -274,13 +273,11 @@
       $599 NZD <span>— USD equivalent at checkout</span>
     </div>
 
-    <!-- IFRAME: YOUR VECTARY CONFIGURATOR (placeholder) -->
+    <!-- IFRAME: YOUR IMAGE PLACEHOLDER (hero shot.jpg in root) -->
     <div class="iframe-wrapper">
       <iframe 
-        src="about:blank" 
-        title="Configurator demo — replace with Vectary embed URL"
-        data-placeholder="YOUR_VECTARY_EMBED_URL"
-        srcdoc="<html style='background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-family:sans-serif;height:100%;'><p style='color:#aaa;'>configurator iframe — paste your Vectary embed URL here</p></html>">
+        srcdoc="<html style='background:#f5f5f5;display:flex;align-items:center;justify-content:center;height:100%;font-family:sans-serif;'><img src='/hero%20shot.jpg' style='max-width:100%;max-height:100%;object-fit:contain;' alt='Configurator demo placeholder'></html>"
+        title="Configurator demo — replace with Vectary embed URL">
       </iframe>
     </div>
 
@@ -366,8 +363,6 @@
   }
   
   verifyBtn.addEventListener('click', () => {
-    // Manual verification: user asserts they searched and found your LinkedIn profile
-    // In production, this could link to your LinkedIn profile first
     const confirmVerify = confirm(
       'Have you searched for and found the config.nz LinkedIn profile?\n\n' +
       'Click OK to confirm verification. (Manual check — no automated OAuth.)'
@@ -376,18 +371,13 @@
       verified = true;
       localStorage.setItem('config_verified', 'true');
       updateUI();
-      // Optional: send event to Netlify function for tracking
       console.log('Verification recorded at', new Date().toISOString());
     }
   });
   
   // Initialize UI
   updateUI();
-  
-  // Optional: Replace iframe placeholder with real URL when ready
-  // document.querySelector('iframe').src = 'YOUR_VECTARY_EMBED_URL';
 </script>
 
-<!-- Netlify identity optional — not used for verification -->
 </body>
 </html>
