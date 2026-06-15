@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>config — test configurator ideas cheaply</title>
+  
+  <!-- Google Fonts: Press Start 2P for logo -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <!-- No indexing for search engines -->
+  <meta name="robots" content="noindex, nofollow">
+  
+  <style>
+    /* MINIMAL RESET — VECTARY STYLE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #fafafa;
+      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* LOGO — wargames font, crimson, lowercase */
+    .logo {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 100;
+    }
+
+    .logo a {
+      color: #dc2626;
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      font-size: 0.9rem;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .logo a:hover {
+      opacity: 0.8;
+    }
+
+    /* GLOBAL LINKEDIN VERIFY BAR */
+    .verify-bar {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 100;
+    }
+
+    .verify-btn {
+      background: none;
+      border: 1px solid #e0e0e0;
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-family: inherit;
+      color: #555;
+      cursor: pointer;
+      border-radius: 0;
+      transition: all 0.2s ease;
+    }
+
+    .verify-btn:hover {
+      border-color: #dc2626;
+      color: #dc2626;
+    }
+
+    .verify-status {
+      font-size: 0.7rem;
+      color: #888;
+      margin-top: 0.25rem;
+      text-align: right;
+    }
+
+    /* LANDING POINTS */
+    .landing-point {
+      margin: 6rem 0;
+      padding-top: 2rem;
+      border-top: 1px solid #eaeaea;
+      scroll-margin-top: 4rem;
+    }
+
+    .landing-point:first-of-type {
+      margin-top: 4rem;
+      border-top: none;
+    }
+
+    .landing-point h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .landing-point .badge {
+      font-size: 0.7rem;
+      color: #dc2626;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .landing-point h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .description {
+      color: #555;
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* IFRAME CONTAINER — LET THE IFRAME SPEAK */
+    .iframe-wrapper {
+      margin: 2rem 0;
+      background: white;
+      width: 100%;
+      border: 1px solid #eaeaea;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 550px;
+      border: none;
+      background: white;
+    }
+
+    /* PRICE TAG */
+    .price {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin: 1rem 0;
+      color: #222;
+    }
+
+    .price span {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: #888;
+    }
+
+    /* SCHEMA VISIBLE FOR HUMANS (subtle) */
+    .schema-note {
+      font-size: 0.7rem;
+      color: #bbb;
+      margin-top: 1rem;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 0.75rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      margin: 6rem 0 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #eaeaea;
+      font-size: 0.7rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      color: #dc2626;
+    }
+
+    /* ANCHOR LINK STYLES */
+    .anchor-link {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.7rem;
+      margin-left: 0.5rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    h2:hover .anchor-link {
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
+      }
+      .logo {
+        position: static;
+        margin-bottom: 2rem;
+      }
+      .verify-bar {
+        position: static;
+        margin-bottom: 2rem;
+        text-align: right;
+      }
+      iframe {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- LOGO: lowercase "config" in wargames font, crimson -->
+  <div class="logo">
+    <a href="/">config</a>
+  </div>
+
+  <!-- GLOBAL LINKEDIN VERIFICATION -->
+  <div class="verify-bar">
+    <button class="verify-btn" id="verifyBtn">🔗 verify via linkedin</button>
+    <div class="verify-status" id="verifyStatus">not verified</div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  
+  <!-- LANDING POINT 1: NZ SERVICES (local) -->
+  <div id="nz-services" class="landing-point">
+    <div class="badge">01 — local</div>
+    <h2>
+      nz services
+      <a href="#nz-services" class="anchor-link">#</a>
+    </h2>
+    <div class="description">
+      Product validation, web development, and configuration for founder-led NZ businesses.
+      Fixed-scope, no surprises.
+    </div>
+    <!-- Minimal schema for local services -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "NZ Services",
+      "description": "Product validation, web development, and configuration for NZ businesses",
+      "provider": { "@type": "Organization", "name": "config" },
+      "areaServed": "New Zealand"
+    }
+    </script>
+  </div>
+
+  <!-- LANDING POINT 2: CONFIGURATOR TESTING TOOL (global, agentic) -->
+  <div id="configurator-test" class="landing-point">
+    <div class="badge">02 — global / agentic</div>
+    <h2>
+      configurator testing tool
+      <a href="#configurator-test" class="anchor-link">#</a>
+    </h2>
+    <div class="description">
+      <strong>How do I test a configurator idea cheaply?</strong><br>
+      Fixed price. Easy onboarding. No agency overhead.
+    </div>
+
+    <div class="price">
+      $599 NZD <span>— USD equivalent at checkout</span>
+    </div>
+
+    <!-- IFRAME: YOUR VECTARY CONFIGURATOR (placeholder) -->
+    <div class="iframe-wrapper">
+      <iframe 
+        src="about:blank" 
+        title="Configurator demo — replace with Vectary embed URL"
+        data-placeholder="YOUR_VECTARY_EMBED_URL"
+        srcdoc="<html style='background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-family:sans-serif;height:100%;'><p style='color:#aaa;'>configurator iframe — paste your Vectary embed URL here</p></html>">
+      </iframe>
+    </div>
+
+    <h3>What you get</h3>
+    <div class="description">
+      <strong>Inputs:</strong> configurator idea, test parameters, target platform<br>
+      <strong>Outputs:</strong> feasibility report, cost estimate, technical risk assessment<br>
+      <strong>Onboarding:</strong> Reply to email → verify LinkedIn → submit idea → receive report (7 days)
+    </div>
+
+    <!-- RICH SCHEMA FOR AGENTIC SEARCH -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Configurator Testing Tool",
+      "description": "Test configurator ideas cheaply before building",
+      "solvesProblem": "How do I test a configurator idea cheaply",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "599",
+        "priceCurrency": "NZD",
+        "availability": "https://schema.org/OnlineOnly",
+        "description": "Fixed price. No surprises."
+      },
+      "featureList": ["feasibility report", "cost estimate", "risk assessment"],
+      "inputParameters": ["configurator idea", "test parameters", "target platform"],
+      "outputs": ["feasibility report", "cost estimate", "technical risk assessment"],
+      "onboarding": "Reply to email, verify via LinkedIn, submit configurator idea, receive test report",
+      "verificationRequired": "LinkedIn profile",
+      "accessMethod": "Reply to cold email for unique link"
+    }
+    </script>
+
+    <div class="schema-note">
+      Agent-ready schema • fixed price $599 • problem: "how do I test a configurator idea cheaply"
+    </div>
+  </div>
+
+  <!-- FUTURE LANDING POINTS (placeholder) -->
+  <div id="future" class="landing-point">
+    <div class="badge">03 — future</div>
+    <h2>
+      more tools
+      <a href="#future" class="anchor-link">#</a>
+    </h2>
+    <div class="description">
+      Additional configurator tooling — parameters, automation, AI validation.
+      <em>Coming as needed.</em>
+    </div>
+  </div>
+
+  <!-- FOOTER: only LinkedIn link -->
+  <div class="footer">
+    <a href="https://linkedin.com/in/YOUR_PROFILE" target="_blank" rel="noopener noreferrer">linkedin</a>
+  </div>
+
+</div>
+
+<!-- SIMPLE GLOBAL VERIFICATION (manual — no OAuth complexity) -->
+<script>
+  const verifyBtn = document.getElementById('verifyBtn');
+  const verifyStatus = document.getElementById('verifyStatus');
+  
+  // Check localStorage for existing verification
+  let verified = localStorage.getItem('config_verified') === 'true';
+  
+  function updateUI() {
+    if (verified) {
+      verifyStatus.textContent = '✓ verified via linkedin';
+      verifyStatus.style.color = '#dc2626';
+      verifyBtn.textContent = '✓ verified';
+      verifyBtn.disabled = true;
+      verifyBtn.style.opacity = '0.6';
+    } else {
+      verifyStatus.textContent = 'not verified — click to confirm linkedin search';
+      verifyStatus.style.color = '#888';
+      verifyBtn.textContent = '🔗 verify via linkedin';
+      verifyBtn.disabled = false;
+      verifyBtn.style.opacity = '1';
+    }
+  }
+  
+  verifyBtn.addEventListener('click', () => {
+    // Manual verification: user asserts they searched and found your LinkedIn profile
+    // In production, this could link to your LinkedIn profile first
+    const confirmVerify = confirm(
+      'Have you searched for and found the config.nz LinkedIn profile?\n\n' +
+      'Click OK to confirm verification. (Manual check — no automated OAuth.)'
+    );
+    if (confirmVerify) {
+      verified = true;
+      localStorage.setItem('config_verified', 'true');
+      updateUI();
+      // Optional: send event to Netlify function for tracking
+      console.log('Verification recorded at', new Date().toISOString());
+    }
+  });
+  
+  // Initialize UI
+  updateUI();
+  
+  // Optional: Replace iframe placeholder with real URL when ready
+  // document.querySelector('iframe').src = 'YOUR_VECTARY_EMBED_URL';
+</script>
+
+<!-- Netlify identity optional — not used for verification -->
+</body>
+</html>
