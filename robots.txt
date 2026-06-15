@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# No search engine traffic expected
+# This site is for direct/agentic access only
